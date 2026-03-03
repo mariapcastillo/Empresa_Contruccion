@@ -1,0 +1,61 @@
+### ================================
+### VARIABLES
+### ================================
+
+@host = http://localhost
+@port = 8000
+@baseUrl = {{host}}:{{port}}/operarios
+
+### ================================
+### 1️⃣ LISTAR TODOS LOS OPERARIOS
+### ================================
+
+GET {{baseUrl}}
+Content-Type: application/json
+
+
+### ================================
+### 2️⃣ OBTENER OPERARIO POR ID
+### ================================
+
+GET {{baseUrl}}/101
+Content-Type: application/json
+
+
+### ================================ // esto lo hace el admin 
+### 3️⃣ CREAR OPERARIO // para est oprimero el admin tiene que crear el usuario con rol operario y luego crear el operario
+### ================================
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "especialidad": "Electricidad industrial",
+  "estado": "disponible",
+  "localizacion": "Madrid Centro",
+  "telefono": "600123456"
+}
+
+
+### ================================
+### 4️⃣ ACTUALIZAR OPERARIO
+### ================================
+
+PUT {{baseUrl}}/101
+Content-Type: application/json
+
+{
+  "especialidad": "Electricidad avanzada",
+  "estado": "ocupado",
+  "localizacion": "Madrid Norte",
+  "telefono": "600999999"
+}
+
+
+### ================================
+### 5️⃣ ELIMINAR OPERARIO
+### ================================
+
+DELETE {{baseUrl}}/101
+Content-Type: application/json
