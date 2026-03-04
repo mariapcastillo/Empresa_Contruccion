@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from db.database import test_db_connection
 from routes import operarios_routes
 from routes import notificaciones_operario
+from routes import admin_routes
 
 app = FastAPI()
 
@@ -15,7 +16,7 @@ async def health():
     return {"api": "ok", "db": "ok"}
 
 
-
+app.include_router(admin_routes.router, prefix='/admin', tags=['admin'])
 
 app.include_router(operarios_routes.router, prefix='/operarios', tags= ['operarios'])
 
