@@ -4,6 +4,9 @@ import aiomysql
 
 load_dotenv()
 
+print("HOST:", os.getenv("MYSQL_HOST"))
+print("USER:", os.getenv("MYSQL_USER"))
+
 async def get_conn():
     return await aiomysql.connect(
         host=os.getenv("MYSQL_HOST"),

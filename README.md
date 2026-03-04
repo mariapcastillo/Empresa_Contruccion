@@ -1,4 +1,3 @@
-
 # 🏗️ Plataforma interna de gestión de obras
 
 Aplicación web interna para la gestión y seguimiento de obras de construcción.
@@ -19,12 +18,12 @@ Usuarios encargados de ejecutar trabajos en obra.
 
 **Funciones principales:**
 
-* Consultar las obras asignadas
-* Registrar avances de trabajo
-* Reportar incidencias
-* Solicitar materiales
-* Marcar finalización de tareas
-* Cambiar estado a *disponible* al completar una obra
+- Consultar las obras asignadas
+- Registrar avances de trabajo
+- Reportar incidencias
+- Solicitar materiales
+- Marcar finalización de tareas
+- Cambiar estado a _disponible_ al completar una obra
 
 ---
 
@@ -34,13 +33,13 @@ Responsable de planificación, seguimiento y asignación de personal.
 
 **Funciones principales:**
 
-* Acceder a todas las obras activas
-* Crear nuevas obras
-* Asignar operarios disponibles a obras
-* Visualizar avances registrados
-* Consultar incidencias reportadas
-* Ver disponibilidad de trabajadores
-* Gestionar estado de las obras
+- Acceder a todas las obras activas
+- Crear nuevas obras
+- Asignar operarios disponibles a obras
+- Visualizar avances registrados
+- Consultar incidencias reportadas
+- Ver disponibilidad de trabajadores
+- Gestionar estado de las obras
 
 ---
 
@@ -57,11 +56,11 @@ Responsable de planificación, seguimiento y asignación de personal.
 
 # 🏗️ Conceptos clave
 
-* **Obra:** Proyecto de construcción gestionado en la plataforma.
-* **Operario disponible:** Trabajador sin obra asignada activa.
-* **Incidencia:** Problema o bloqueo en la ejecución.
-* **Avance:** Registro de progreso en la obra.
-* **Solicitud de material:** Petición de recursos necesarios.
+- **Obra:** Proyecto de construcción gestionado en la plataforma.
+- **Operario disponible:** Trabajador sin obra asignada activa.
+- **Incidencia:** Problema o bloqueo en la ejecución.
+- **Avance:** Registro de progreso en la obra.
+- **Solicitud de material:** Petición de recursos necesarios.
 
 ---
 
@@ -71,8 +70,8 @@ El acceso se realiza mediante autenticación con credenciales de usuario.
 
 Tipos de acceso:
 
-* Administrador
-* Operario
+- Administrador
+- Operario
 
 Las funcionalidades visibles dependen del rol.
 
@@ -82,11 +81,11 @@ Las funcionalidades visibles dependen del rol.
 
 Centralizar la gestión operativa de obras y personal de campo, permitiendo:
 
-* Mejor coordinación interna
-* Seguimiento en tiempo real
-* Registro histórico de obras
-* Optimización de recursos humanos
-* Trazabilidad de incidencias y materiales
+- Mejor coordinación interna
+- Seguimiento en tiempo real
+- Registro histórico de obras
+- Optimización de recursos humanos
+- Trazabilidad de incidencias y materiales
 
 ---
 
@@ -99,3 +98,10 @@ En desarrollo.
 # 📄 Licencia
 
 Uso interno de la empresa.
+
+## PLUS NOTIFICACIONES Reglas de negocio clave
+
+🔒 El operario solo ve/edita sus propias notificaciones
+🧑‍💼 El admin ve todas las notificaciones de todas las obras
+🗑️ Solo el admin puede eliminar notificaciones
+🔍 Los filtros son opcionales — sin filtro devuelve todo lo permitido al rol

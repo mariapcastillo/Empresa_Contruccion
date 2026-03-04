@@ -1,0 +1,13 @@
+
+### ================================
+### 1️⃣ enviar notificación
+### ================================
+
+POST http://localhost:8000/operarios/notificaciones?user_id=1
+Content-Type: application/json
+
+{
+    "obra_id": 1,
+    "tipo": "incidencia",
+    "mensaje": "tal vez no sepa lo que haga pero luzco genial haciendolo"
+}
