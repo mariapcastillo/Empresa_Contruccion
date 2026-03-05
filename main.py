@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from db.database import test_db_connection
 from routes import operarios_routes
-from routes import notificaciones_operario
+from routes import notificaciones_operario, notificaciones_admin
 from routes import admin_routes
 
 app = FastAPI()
@@ -21,3 +21,5 @@ app.include_router(admin_routes.router, prefix='/admin', tags=['admin'])
 app.include_router(operarios_routes.router, prefix='/operarios', tags= ['operarios'])
 
 app.include_router(notificaciones_operario.router, prefix='/operarios', tags=['notificaciones'])
+
+app.include_router(notificaciones_admin.router, prefix='/admin', tags=['notificaciones'])

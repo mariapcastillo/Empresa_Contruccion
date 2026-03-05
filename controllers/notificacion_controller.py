@@ -98,8 +98,43 @@ async def get_notificacion_by_id_operario(id: int, user_id: int):
             conn.close()
 
 async def update_notificacion(notificacion_id: int, user_id: int, mensaje: str):
-    # Tarea: UPDATE mensaje — verificar ownership primero
-    ...
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
+
+                await cursor.execute("""
+                SELECT * FROM notificaciones WHERE id = %s
+                """, (notificacion_id,))
+
+                notificacion = await cursor.fetchone()
+
+                # caso 1: no existe
+                if not notificacion:
+                    raise HTTPException(status_code=404, detail="Notificacion no encontrada")
+
+                # caso 2: existe pero no es tuya
+                if notificacion["user_id"] != user_id:
+                        raise HTTPException(status_code=403, detail="No tienes los permisos necesarios")
+
+                # caso 3: todo ok
+                await cursor.execute("""
+                    UPDATE notificaciones SET mensaje = %s WHERE id = %s
+                """, (mensaje, notificacion_id))
+
+                await conn.commit()
+                
+                await cursor.execute("""              
+                SELECT * FROM notificaciones WHERE id = %s
+                """, (notificacion_id,))
+
+                return await cursor.fetchone()
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()
 
 # ── ADMIN ─────────────────────────────────────────────
 
@@ -140,16 +175,96 @@ async def get_all_notificaciones(tipo=None, obra_id=None, is_read=None):
         if conn:
             conn.close()
 
-async def get_notificacion_by_id(notificacion_id: int):
-    # Tarea: SELECT simple por id, solo 404 si no existe
-    ...
 
 async def cerrar_notificacion(notificacion_id: int):
-    # Tarea: UPDATE is_read=1 — pero primero verificar que tipo='incidencia'
-    ...
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
+
+            await cursor.execute("""
+                SELECT * FROM notificaciones WHERE id = %s
+            """, (notificacion_id,))
+
+            notificacion = await cursor.fetchone()
+
+            if not notificacion:
+                raise HTTPException(status_code=404, detail="Notificacion no encontrada")
+
+            if notificacion["tipo"] != "incidencia":
+                raise HTTPException(status_code=400, detail="Solo se pueden cerrar notificaciones de tipo incidencia")
+
+            await cursor.execute("""
+                UPDATE notificaciones SET is_read = %s WHERE id = %s
+            """, (1, notificacion_id))
+
+            await conn.commit()
+            return {"message": "Notificacion cerrada"}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()
 
 async def delete_notificacion(notificacion_id: int):
-    # Tarea: DELETE — verificar que existe primero para poder devolver 404
-    ...
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
 
-# preguntar a Claudio: para que el admin seleccione leida o no leida es necesaria una ruta o se hace en el fronted?
+                await cursor.execute("""
+                SELECT * FROM notificaciones WHERE id = %s
+                """, (notificacion_id,))
+
+                notificacion = await cursor.fetchone()
+
+                # caso 1: no existe
+                if not notificacion:
+                    raise HTTPException(status_code=404, detail="Notificacion no encontrada")
+         
+                # caso 2: delete
+                await cursor.execute("""
+                DELETE FROM notificaciones WHERE id = %s
+                """, (notificacion_id,))
+
+                await conn.commit()
+                return {"message": "Notificacion eliminada"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()
+
+# -- SIRVE PARA AMBOS:
+async def get_notificacion_by_id(notificacion_id: int, user_id: int,rol: str):
+    # Tarea: SELECT simple por id, solo 404 si no existe
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
+
+                await cursor.execute("""
+                SELECT * FROM notificaciones WHERE id = %s
+                """, (notificacion_id,))
+
+                notificacion = await cursor.fetchone()
+
+                # caso 1: no existe
+                if not notificacion:
+                    raise HTTPException(status_code=404, detail="Notificacion no encontrada")
+
+                # caso 2: existe pero no es tuya
+                if rol == 'operario':
+                    if notificacion["user_id"] != user_id:
+                        raise HTTPException(status_code=403, detail="No tienes los permisos necesarios")
+
+                # caso 3: todo ok
+                return notificacion
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()

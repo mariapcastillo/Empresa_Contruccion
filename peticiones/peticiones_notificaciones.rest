@@ -20,3 +20,28 @@ GET http://localhost:8000/operarios/notificaciones/999?user_id=1
 
 ### caso 3: notificación de otro usuario
 GET http://localhost:8000/operarios/notificaciones/17?user_id=99
+
+
+
+### 1. GET todas las notificaciones (admin)
+GET http://localhost:8000/admin/notificaciones
+
+### 2. GET por id (admin)
+GET http://localhost:8000/admin/notificaciones/17?user_id=1&rol=admin
+
+### 3. PATCH cerrar incidencia
+PATCH http://localhost:8000/admin/notificaciones/17/cerrar
+
+### 4. DELETE
+DELETE http://localhost:8000/admin/notificaciones/13
+
+### 5. GET todas las mías (operario)
+GET http://localhost:8000/operarios/notificaciones?user_id=1
+
+### 6. PUT actualizar mensaje
+PUT http://localhost:8000/operarios/notificaciones/17?user_id=1
+Content-Type: application/json
+
+{
+    "mensaje": "mensaje actualizado"
+}
