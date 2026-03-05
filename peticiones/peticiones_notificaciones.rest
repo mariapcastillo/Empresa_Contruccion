@@ -9,5 +9,14 @@ Content-Type: application/json
 {
     "obra_id": 1,
     "tipo": "incidencia",
-    "mensaje": "tal vez no sepa lo que haga pero luzco genial haciendolo"
+    "mensaje": "holaaaaa que tal chicas?"
 }
+
+### caso 1: notificación tuya
+GET http://localhost:8000/operarios/notificaciones/17?user_id=1
+
+### caso 2: notificación que no existe
+GET http://localhost:8000/operarios/notificaciones/999?user_id=1
+
+### caso 3: notificación de otro usuario
+GET http://localhost:8000/operarios/notificaciones/17?user_id=99

@@ -97,15 +97,13 @@ async def get_notificacion_by_id_operario(id: int, user_id: int):
         if conn:
             conn.close()
 
-
-
 async def update_notificacion(notificacion_id: int, user_id: int, mensaje: str):
     # Tarea: UPDATE mensaje — verificar ownership primero
     ...
 
 # ── ADMIN ─────────────────────────────────────────────
 
-async def get_notificaciones_admin(tipo=None, obra_id=None, is_read=None):
+async def get_all_notificaciones(tipo=None, obra_id=None, is_read=None):
     conn = None
     try:
         conn = await get_conn()
@@ -142,8 +140,7 @@ async def get_notificaciones_admin(tipo=None, obra_id=None, is_read=None):
         if conn:
             conn.close()
 
-
-async def get_notificacion_by_id_admin(notificacion_id: int):
+async def get_notificacion_by_id(notificacion_id: int):
     # Tarea: SELECT simple por id, solo 404 si no existe
     ...
 
@@ -154,3 +151,5 @@ async def cerrar_notificacion(notificacion_id: int):
 async def delete_notificacion(notificacion_id: int):
     # Tarea: DELETE — verificar que existe primero para poder devolver 404
     ...
+
+# preguntar a Claudio: para que el admin seleccione leida o no leida es necesaria una ruta o se hace en el fronted?
