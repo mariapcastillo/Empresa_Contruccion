@@ -4,6 +4,8 @@ from typing import Optional, Literal
 EstadoObra = Literal["pendiente", "en_progreso", "completada"]
 
 
+
+
 class ObraCreate(BaseModel):
     titulo: str = Field(..., min_length=2, max_length=200)
     descripcion: str = Field(..., min_length=2)

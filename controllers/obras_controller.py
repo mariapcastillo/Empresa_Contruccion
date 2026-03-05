@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from models.obra_model import ObraCreate, ObraUpdate
+from models.obras_model import ObraCreate, ObraUpdate
 import aiomysql as aio
 from db.database import get_conn
 

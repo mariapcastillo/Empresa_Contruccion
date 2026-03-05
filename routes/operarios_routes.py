@@ -1,9 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from controllers import operarios_controller
 from models.operario_model import OperarioCreate, OperarioUpdate
+from core.dependences import require_operario
 
-
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(require_operario)]
+)
 
 @router.get("/", status_code=200)
 async def get_all_operarios():
