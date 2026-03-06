@@ -1,0 +1,15 @@
+### ================================
+### GET ME
+### ================================
+
+GET http://localhost:8000/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjYiLCJyb2wiOiJhZG1pbiIsImV4cCI6MTc3Mjc5MTIyNH0.ttLWJLSSZVEgyu7W1K3CUs-M5Pajlu1oJZ7WCxVWO5k
+Content-Type: application/json
+
+### ================================
+### GET ME OPERARIO
+### ================================
+
+GET http://localhost:8000/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjciLCJyb2wiOiJvcGVyYXJpbyIsImV4cCI6MTc3Mjc5MTI1NX0.wCb-KDloTpGSRCKVfEylUdHDKpestyxEfSsZWmDz7A0
+Content-Type: application/json

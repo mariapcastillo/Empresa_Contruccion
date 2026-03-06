@@ -5,6 +5,7 @@ from routes import notificaciones_operario, notificaciones_admin
 from routes import obras_routes
 from routes import auth_routes
 from routes import foto_admin_routes, foto_operario_routes
+from routes import me_routes
 
 app = FastAPI()
 
@@ -32,3 +33,5 @@ app.include_router(notificaciones_operario.router, prefix="/operarios", tags=["o
 
 app.include_router(foto_admin_routes.router, prefix="/admin/obras", tags=["admin-fotos"])
 app.include_router(foto_operario_routes.router, prefix="/operarios", tags=["operario-fotos"])
+
+app.include_router(me_routes.router, tags=["me"])
