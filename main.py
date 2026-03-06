@@ -4,6 +4,7 @@ from routes import operarios_routes
 from routes import notificaciones_operario, notificaciones_admin
 from routes import obras_routes
 from routes import auth_routes
+from routes import foto_admin_routes, foto_operario_routes
 
 app = FastAPI()
 
@@ -17,12 +18,17 @@ async def health():
     return {"api": "ok", "db": "ok"}
 
 
-app.include_router(obras_routes.router, prefix='/obras', tags=['obras'])
+# Auth
+app.include_router(auth_routes.router, prefix="/auth", tags=["auth"])
 
-app.include_router(operarios_routes.router, prefix='/operarios', tags= ['operarios'])
+# Admin
+app.include_router(obras_routes.router, prefix="/admin/obras", tags=["admin-obras"])
+app.include_router(operarios_routes.router, prefix="/admin/operarios", tags=["admin-operarios"])
+app.include_router(notificaciones_admin.router, prefix="/admin", tags=["admin-notificaciones"])
 
-app.include_router(notificaciones_operario.router, prefix='/operarios', tags=['notificaciones'])
+# Operario
+app.include_router(notificaciones_operario.router, prefix="/operarios", tags=["operario-notificaciones"])
 
-app.include_router(notificaciones_admin.router, prefix='/admin', tags=['notificaciones'])
 
-app.include_router(auth_routes.router, prefix='/auth', tags=['auth'])
+app.include_router(foto_admin_routes.router, prefix="/admin/obras", tags=["admin-fotos"])
+app.include_router(foto_operario_routes.router, prefix="/operarios", tags=["operario-fotos"])

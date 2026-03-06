@@ -9,9 +9,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
-    """
-    Lee el token Bearer, lo decodifica y devuelve el usuario desde la BD.
-    """
     payload = decode_access_token(token)
 
     user_id = payload.get("sub")
@@ -34,8 +31,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
             return user
 
-    except HTTPException as e:
-        raise e
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:

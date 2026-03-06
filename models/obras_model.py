@@ -1,9 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, Literal
 
-EstadoObra = Literal["pendiente", "en_progreso", "completada"]
-
-
+EstadoObra = Literal["pendiente", "en progreso", "completada"]
 
 
 class ObraCreate(BaseModel):

@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configuración JWT desde .env
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
     raise RuntimeError("Falta SECRET_KEY en el .env")
@@ -15,8 +14,7 @@ if not SECRET_KEY:
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
 
-# Contexto para hashear contraseñas
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:

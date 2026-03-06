@@ -18,6 +18,8 @@ async def get_all_obras():
             rows = await cursor.fetchall()
             return rows
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:
@@ -43,6 +45,8 @@ async def get_obra_by_id(id: int):
 
             return row
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:
@@ -69,7 +73,11 @@ async def create_obra(obra: ObraCreate):
             await conn.commit()
             return {"message": "Obra creada correctamente"}
 
+    except HTTPException:
+        raise
     except Exception as e:
+        if conn:
+            await conn.rollback()
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:
         if conn:
@@ -101,9 +109,17 @@ async def update_obra(id: int, obra: ObraUpdate):
             ))
 
             await conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Obra no encontrada")
+
             return {"message": "Obra actualizada correctamente"}
 
+    except HTTPException:
+        raise
     except Exception as e:
+        if conn:
+            await conn.rollback()
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:
         if conn:
@@ -122,13 +138,22 @@ async def delete_obra(id: int):
             """, (id,))
 
             await conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Obra no encontrada")
+
             return {"message": "Obra eliminada correctamente"}
 
+    except HTTPException:
+        raise
     except Exception as e:
+        if conn:
+            await conn.rollback()
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
     finally:
         if conn:
             conn.close()
+
 
 # ASIGNAR OPERARIO A OBRA
 async def asignar_operario(obra_id: int, operario_id: int):
@@ -172,7 +197,7 @@ async def asignar_operario(obra_id: int, operario_id: int):
                 SELECT id
                 FROM obras
                 WHERE operario_id = %s
-                AND estado IN ('pendiente','en_progreso')
+                AND estado IN ('pendiente', 'en progreso')
                 LIMIT 1
             """, (operario_id,))
             asignacion = await cursor.fetchone()
@@ -184,7 +209,7 @@ async def asignar_operario(obra_id: int, operario_id: int):
             await cursor.execute("""
                 UPDATE obras
                 SET operario_id = %s,
-                    estado = 'en_progreso',
+                    estado = 'en progreso',
                     updated_at = NOW()
                 WHERE id = %s
             """, (operario_id, obra_id))
@@ -204,9 +229,12 @@ async def asignar_operario(obra_id: int, operario_id: int):
                 "operario_id": operario_id
             }
 
+    except HTTPException:
+        raise
     except Exception as e:
+        if conn:
+            await conn.rollback()
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
-
     finally:
         if conn:
             conn.close()

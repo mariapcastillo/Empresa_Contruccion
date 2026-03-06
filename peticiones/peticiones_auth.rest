@@ -1,0 +1,67 @@
+### ================================
+### VARIABLES
+### ================================
+
+@host = http://localhost
+@port = 8000
+@baseUrl = {{host}}:{{port}}
+
+### ================================
+### REGISTER ADMIN
+### ================================
+
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin6@empresa.com",
+  "password": "123456",
+  "first_name": "Admin",
+  "last_name": "Principal",
+  "rol": "admin"
+}
+
+
+### ================================
+### REGISTER OPERARIO
+### ================================
+
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "operario@empresa.com",
+  "password": "123456",
+  "first_name": "Juan",
+  "last_name": "Obrero",
+  "rol": "operario"
+}
+
+
+### ================================
+### LOGIN admin 
+### ================================
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin6@empresa.com",
+  "password": "123456"
+}
+
+//devuelve token :eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjYiLCJyb2wiOiJhZG1pbiIsImV4cCI6MTc3Mjc4NjU0OX0.BT5KgTQurLdi8OEhk7FhEer1xakOEcGBzxdl9mAlYFM
+
+### ================================
+### LOGIN OPERARIO
+### ================================
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "operario@empresa.com",
+  "password": "123456"
+}
+
+//devuelve token :eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjciLCJyb2wiOiJvcGVyYXJpbyIsImV4cCI6MTc3Mjc4NjcyMn0.bTBenV5g4fJUZVdDcfQ3QsiVD6P1YzXcn8xiZz7lo-k"
