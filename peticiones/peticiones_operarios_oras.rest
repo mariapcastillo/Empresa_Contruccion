@@ -1,0 +1,15 @@
+### ================================
+### VARIABLES
+### ================================
+
+@host = http://localhost
+@port = 8000
+@baseUrl = {{host}}:{{port}}
+
+### ================================
+### OBRAS DEL OPERARIO LOGUEADO
+### ================================
+
+GET {{baseUrl}}/operarios/obras
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjciLCJyb2wiOiJvcGVyYXJpbyIsImV4cCI6MTc3Mjg4MTM2MH0.bKunIx1MX4soSy8xfaWrxZYKhdbIOMtrpH6qyrxeXQ0
+Content-Type: application/json
