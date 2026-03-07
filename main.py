@@ -35,3 +35,6 @@ app.include_router(foto_admin_routes.router, prefix="/admin/obras", tags=["admin
 app.include_router(foto_operario_routes.router, prefix="/operarios", tags=["operario-fotos"])
 
 app.include_router(me_routes.router, tags=["me"])
+
+app.include_router(operarios_routes.router,prefix="/operarios",tags=["operarios-obras"]
+)
