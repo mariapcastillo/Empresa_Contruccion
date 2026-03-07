@@ -6,6 +6,7 @@ from routes import obras_routes
 from routes import auth_routes
 from routes import foto_admin_routes, foto_operario_routes
 from routes import me_routes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
