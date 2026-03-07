@@ -238,3 +238,36 @@ async def asignar_operario(obra_id: int, operario_id: int):
     finally:
         if conn:
             conn.close()
+
+async def get_obras_operario(user_id: int):
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
+            await cursor.execute("""
+                SELECT 
+                    o.id,
+                    o.titulo,
+                    o.descripcion,
+                    o.categoria,
+                    o.localizacion,
+                    o.operario_id,
+                    o.estado,
+                    f.url AS foto
+                FROM obras o
+                JOIN operarios op ON o.operario_id = op.id
+                LEFT JOIN fotos f ON f.obra_id = o.id
+                WHERE op.user_id = %s
+                GROUP BY o.id, o.titulo, o.descripcion, o.categoria, o.localizacion, o.operario_id, o.estado, f.url
+                ORDER BY o.id DESC
+            """, (user_id,))
+
+            return await cursor.fetchall()
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()
