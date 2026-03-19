@@ -9,7 +9,7 @@ class RegisterRequest(BaseModel):
     password: str = Field(..., min_length=6, max_length=100)
     first_name: str = Field(..., min_length=2, max_length=100)
     last_name: str = Field(..., min_length=2, max_length=100)
-    rol: Rol
+    rol: Rol = "operario"  # ← valor por defecto, nunca puede ser admin desde el register
 
 
 class LoginRequest(BaseModel):
