@@ -239,6 +239,8 @@ async def asignar_operario(obra_id: int, operario_id: int):
         if conn:
             conn.close()
 
+
+# GET OBRAS DEL OPERARIO LOGUEADO
 async def get_obras_operario(user_id: int):
     conn = None
     try:
@@ -263,6 +265,52 @@ async def get_obras_operario(user_id: int):
             """, (user_id,))
 
             return await cursor.fetchall()
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+    finally:
+        if conn:
+            conn.close()
+
+
+# GET DETALLE DE UNA OBRA DEL OPERARIO LOGUEADO
+async def get_obra_operario_by_id(obra_id: int, user_id: int):
+    conn = None
+    try:
+        conn = await get_conn()
+        async with conn.cursor(aio.DictCursor) as cursor:
+            await cursor.execute("""
+                SELECT 
+                    o.id,
+                    o.titulo,
+                    o.descripcion,
+                    o.categoria,
+                    o.localizacion,
+                    o.operario_id,
+                    o.estado,
+                    f.url AS foto,
+                    o.fecha_inicio,
+                    o.created_at,
+                    o.updated_at
+                FROM obras o
+                JOIN operarios op ON o.operario_id = op.id
+                LEFT JOIN fotos f ON f.obra_id = o.id
+                WHERE o.id = %s
+                  AND op.user_id = %s
+                LIMIT 1
+            """, (obra_id, user_id))
+
+            obra = await cursor.fetchone()
+
+            if not obra:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Obra no encontrada o no asignada a este operario"
+                )
+
+            return obra
 
     except HTTPException:
         raise
